@@ -1,34 +1,38 @@
-apiVersion: apps/v1
-kind: Deployment
+apiVersion: v1
+kind: Service
 metadata:
-  name: example-app-1
-  labels:
-    app: example-app-1
-  namespace: default
+  name: service-deployment
 spec:
   selector:
-    matchLabels:
-      app: example-app-1
-  replicas: 2
-  strategy:
-    type: RollingUpdate
-    rollingUpdate:
-      maxSurge: 1
-      maxUnavailable: 0
-  template:
-    metadata:
-      labels:
-        app: example-app-1
-    spec:
-      containers:
-      - name: example-app-1
-        image: ladphp/flux-example:1
-        ports:
-        - containerPort: 5000
-        volumeMounts:
-        - name: config-volume
-          mountPath: /configs/
-      volumes:
-      - name: config-volume
-        configMap:
-          name: example-app-1
+    app: myapp-deployment
+  ports:
+  - protocol: TCP
+    port: 80
+    targetPort: 8080
+  type: LoadBalancer
+  externalIPs:
+    - 192.168.1.79
+---
+  apiVersion: apps/v1
+  kind: Deployment
+  metadata:
+    name: myapp-deployment
+  spec:
+    replicas: 3
+    selector:
+      matchLabels:
+        app: myapp-deployment
+    template:
+      metadata:
+        labels:
+          app: myapp-deployment
+      spec:
+        containers:
+        - name: myapp-deployment
+          image: ladphp/daler-kub-test
+          resources:
+            limits:
+              memory: "128Mi"
+              cpu: "500m"
+          ports:
+          - containerPort: 8080
