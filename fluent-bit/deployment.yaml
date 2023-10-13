@@ -5,7 +5,7 @@ metadata:
   namespace: flux-system
 spec:
   releaseName: fluentd-bit
-  targetNamespace: awx
+  targetNamespace: fluentd-bit
   interval: 5m
   chart:
     spec:
