@@ -1,8 +1,8 @@
 apiVersion: source.toolkit.fluxcd.io/v1
 kind: GitRepository
 metadata:
-  name: filebeat
-  namespace: filebeat
+  name: fluentd-bit
+  namespace: fluentd-bit
 spec:
   interval: 1m0s
   ref:
