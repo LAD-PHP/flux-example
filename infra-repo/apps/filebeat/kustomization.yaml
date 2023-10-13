@@ -1,12 +1,12 @@
 apiVersion: kustomize.toolkit.fluxcd.io/v1
 kind: Kustomization
 metadata:
-  name: dev
+  name: filebeat
   namespace: filebeat
 spec:
-  interval: 1m
-  path: "./dev"
+  interval: 15m
+  path: "./filebeat"
   prune: true
   sourceRef:
     kind: GitRepository
-    name: dev
+    name: example-app-1
